@@ -1,4 +1,4 @@
-# processing package
+# Processing in Atom
 
 Run Processing sketches from Atom by pressing `ctrl+alt+b`
 
