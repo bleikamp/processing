@@ -2,7 +2,7 @@
   "name": "processing",
   "main": "./lib/processing",
   "version": "0.2.0",
-  "description": "A short description of your package",
+  "description": "Run Processing sketches in Atom",
   "activationCommands": {
     "atom-workspace": "processing:run"
   },
