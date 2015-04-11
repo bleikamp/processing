@@ -1,5 +1,5 @@
 # processing package
 
-A short description of your package.
+Run Processing sketches from Atom by pressing `ctrl+alt+b`
 
-![A screenshot of your package](https://f.cloud.github.com/assets/69169/2290250/c35d867a-a017-11e3-86be-cd7c5bf3ff9b.gif)
+![processing package in action](https://cloud.githubusercontent.com/assets/25792/7103068/73799eda-e04b-11e4-8bbc-8ce625883730.png)
