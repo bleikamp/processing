@@ -11,10 +11,10 @@ module.exports = Processing =
     return
 
   buildSketch: ->
-    exec   = require('child_process').exec
-    editor = atom.workspace.getActivePaneItem()
-    path   = editor?.buffer.file.path.split "/"
-    folder = path[0..path.length-2].join "/"
+    exec    = require('child_process').exec
+    file    = atom.workspace.getActivePaneItem()
+    path    = file?.buffer.file.path.split "/"
+    folder  = path[0..path.length-2].join "/"
     command = "processing-java --sketch=#{folder} --output=#{folder}/build --run --force"
 
     console.log folder
