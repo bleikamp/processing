@@ -2,9 +2,8 @@
 
 module.exports = Processing =
   activate: (state) ->
-    atom.commands.add 'atom-workspace',
-      'processing:run': =>
-        @runSketch()
+    atom.commands.add 'atom-workspace', 'processing:run': =>
+      @runSketch()
 
   saveSketch: ->
     file = atom.workspace.getActivePaneItem()
@@ -17,13 +16,7 @@ module.exports = Processing =
     path   = editor?.buffer.file.path
     arr    = path.split "/"
     folder = arr[0..arr.length-2].join "/"
-    command = "
-      processing-java
-      --sketch=#{folder}
-      --output=#{folder}/build
-      --run
-      --force
-    "
+    command = "processing-java --sketch=#{folder} --output=#{folder}/build --run --force"
 
     console.log folder
 
