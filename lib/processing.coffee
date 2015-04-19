@@ -7,8 +7,16 @@ module.exports = Processing =
       @runSketch()
 
   saveSketch: ->
-    file = atom.workspace.getActivePaneItem()
-    file?.save()
+    editor = atom.workspace.getActivePaneItem()
+    file = editor?.buffer.file
+
+    if file?.existsSync()
+      editor.save()
+    else
+      num = Math.floor(Math.random() * 10000)
+      dir = fs.mkdirSync("/tmp/sketch_#{num}/")
+      editor.saveAs("/tmp/sketch_#{num}/sketch_#{num}.pde")
+
 
   buildSketch: ->
     exec    = require('child_process').exec
