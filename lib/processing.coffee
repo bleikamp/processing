@@ -17,7 +17,6 @@ module.exports = Processing =
       dir = fs.mkdirSync("/tmp/sketch_#{num}/")
       editor.saveAs("/tmp/sketch_#{num}/sketch_#{num}.pde")
 
-
   buildSketch: ->
     exec    = require('child_process').exec
     editor  = atom.workspace.getActivePaneItem()
