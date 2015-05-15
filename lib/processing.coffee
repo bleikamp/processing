@@ -22,7 +22,7 @@ module.exports = Processing =
     editor  = atom.workspace.getActivePaneItem()
     file    = editor?.buffer.file
     folder  = file.getParent().getPath()
-    command = "processing-java --sketch=#{folder} --output=#{folder}/build --run --force"
+    command = "processing-java --sketch='#{folder}' --output='#{folder}/build' --run --force"
 
     exec command, (error, stdout, stderr) ->
       if error
