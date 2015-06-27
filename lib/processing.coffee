@@ -39,6 +39,7 @@ module.exports = Processing =
       console.error(output)
     exit = (code) ->
       console.log("Error code: #{code}")
+    process = new BufferedProcess({command, args, stdout, stderr, exit})
 
   runSketch: ->
     @saveSketch()
