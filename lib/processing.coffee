@@ -1,7 +1,13 @@
-{CompositeDisposable} = require 'atom'
+{CompositeDisposable, BufferedProcess} = require 'atom'
 fs = require 'fs'
+path = require 'path'
 
 module.exports = Processing =
+  config:
+    'processing-executable':
+      type:"string",
+      default:"processing-java"
+
   activate: (state) ->
     atom.commands.add 'atom-workspace', 'processing:run': =>
       @runSketch()
@@ -18,18 +24,22 @@ module.exports = Processing =
       editor.saveAs("/tmp/sketch_#{num}/sketch_#{num}.pde")
 
   buildSketch: ->
-    exec    = require('child_process').exec
+    console.log("build and run time")
     editor  = atom.workspace.getActivePaneItem()
     file    = editor?.buffer.file
     folder  = file.getParent().getPath()
-    command = "processing-java --sketch='#{folder}' --output='#{folder}/build' --run --force"
-
-    exec command, (error, stdout, stderr) ->
-      if error
-          console.log error.stack
-          console.log "Error code: #{error.code}"
-          console.log "Signal: #{error.signal}"
-        console.log "PROCESSING: \n #{stdout} \n #{stderr}"
+    build_dir = path.join(folder, "build")
+    command = path.normalize(atom.config.get("processing.processing-executable"))
+    args = ["--sketch=#{folder}", "--output=#{build_dir}", "--run", "--force"]
+    options = {}
+    console.log("Running command #{command} #{args.join(" ")}")
+    stdout = (output) ->
+      console.log(output)
+    stderr = (output) ->
+      console.error(output)
+    exit = (code) ->
+      console.log("Error code: #{code}")
+    process = new BufferedProcess({command, args, stdout, stderr, exit})
 
   runSketch: ->
     @saveSketch()
