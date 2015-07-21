@@ -43,7 +43,6 @@ module.exports = Processing =
 
     if @process
       psTree @process.process.pid, (err, children) =>
-        console.log("Children", children)
         for child in children
           process.kill(child.PID)
     @process = new BufferedProcess({command, args, stdout, stderr, exit})
