@@ -1,6 +1,7 @@
 {CompositeDisposable, BufferedProcess} = require 'atom'
 fs = require 'fs'
 path = require 'path'
+psTree = require 'ps-tree'
 
 module.exports = Processing =
   config:
@@ -39,7 +40,13 @@ module.exports = Processing =
       console.error(output)
     exit = (code) ->
       console.log("Error code: #{code}")
-    process = new BufferedProcess({command, args, stdout, stderr, exit})
+
+    if @process
+      psTree @process.process.pid, (err, children) =>
+        console.log("Children", children)
+        for child in children
+          process.kill(child.PID)
+    @process = new BufferedProcess({command, args, stdout, stderr, exit})
 
   runSketch: ->
     @saveSketch()

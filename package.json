@@ -11,5 +11,7 @@
   "engines": {
     "atom": ">0.187.0"
   },
-  "dependencies": {}
+  "dependencies": {
+    "ps-tree": "^1.0.0"
+  }
 }
