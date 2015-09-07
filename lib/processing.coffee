@@ -30,7 +30,7 @@ module.exports = Processing =
     folder  = file.getParent().getPath()
     build_dir = path.join(folder, "build")
     command = path.normalize(atom.config.get("processing.processing-executable"))
-    args = ["--sketch=#{folder}", "--output=#{build_dir}", "--run", "--force"]
+    args = ["--force", "--sketch=#{folder}", "--output=#{build_dir}", "--run"]
     options = {}
     console.log("Running command #{command} #{args.join(" ")}")
     stdout = (output) ->
