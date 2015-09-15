@@ -1,7 +1,7 @@
 {
   "name": "processing",
   "main": "./lib/processing",
-  "version": "0.7.0",
+  "version": "0.9.0",
   "description": "Run Processing sketches in Atom",
   "activationCommands": {
     "atom-workspace": "processing:run"
@@ -12,6 +12,7 @@
     "atom": ">0.187.0"
   },
   "dependencies": {
-    "ps-tree": "^1.0.0"
+    "ps-tree": "^1.0.0",
+    "atom-space-pen-views": "^2.0.3"
   }
 }
