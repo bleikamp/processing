@@ -1,15 +1,17 @@
 {
-  "name": "processing",
+  "name": "processing-atom",
   "main": "./lib/processing",
-  "version": "0.7.0",
+  "version": "1.1.0",
   "description": "Run Processing sketches in Atom",
   "activationCommands": {
     "atom-workspace": "processing:run"
   },
-  "repository": "https://github.com/bleikamp/processing",
+  "repository": "https://github.com/msfeldstein/processing",
   "license": "MIT",
   "engines": {
     "atom": ">0.187.0"
   },
-  "dependencies": {}
+  "dependencies": {
+    "ps-tree": "^1.0.0"
+  }
 }
