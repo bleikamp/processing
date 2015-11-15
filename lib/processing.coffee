@@ -1,6 +1,8 @@
 {CompositeDisposable, BufferedProcess} = require 'atom'
 fs = require 'fs'
 path = require 'path'
+psTree = require 'ps-tree'
+ProcessingView = require './processing-view'
 
 module.exports = Processing =
   config:
@@ -11,6 +13,8 @@ module.exports = Processing =
   activate: (state) ->
     atom.commands.add 'atom-workspace', 'processing:run': =>
       @runSketch()
+    atom.commands.add 'atom-workspace', 'processing:present': =>
+      @runSketchPresent()
 
   saveSketch: ->
     editor = atom.workspace.getActivePaneItem()
@@ -30,17 +34,26 @@ module.exports = Processing =
     folder  = file.getParent().getPath()
     build_dir = path.join(folder, "build")
     command = path.normalize(atom.config.get("processing.processing-executable"))
-    args = ["--sketch=#{folder}", "--output=#{build_dir}", "--run", "--force"]
+    args = ["--force","--sketch=#{folder}", "--output=#{build_dir}", "--run"]
     options = {}
     console.log("Running command #{command} #{args.join(" ")}")
-    stdout = (output) ->
-      console.log(output)
-    stderr = (output) ->
-      console.error(output)
+    stdout = (output) => @display output
+    stderr = (output) => @display output
     exit = (code) ->
       console.log("Error code: #{code}")
-    process = new BufferedProcess({command, args, stdout, stderr, exit})
+    if !@view
+      @view = new ProcessingView
+      atom.workspace.addBottomPanel(item: @view)
+    if @process
+      psTree @process.process.pid, (err, children) =>
+        for child in children
+          process.kill(child.PID)
+      @view.clear()
+    @process = new BufferedProcess({command, args, stdout, stderr, exit})
 
   runSketch: ->
     @saveSketch()
     @buildSketch()
+
+  display: (line) ->
+    @view.log(line)
