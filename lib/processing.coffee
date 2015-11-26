@@ -15,6 +15,8 @@ module.exports = Processing =
       @runSketch()
     atom.commands.add 'atom-workspace', 'processing:present': =>
       @runSketchPresent()
+    atom.commands.add 'atom-workspace', 'processing:close': =>
+      @closeSketch()
 
   saveSketch: ->
     editor = atom.workspace.getActivePaneItem()
@@ -51,9 +53,18 @@ module.exports = Processing =
       @view.clear()
     @process = new BufferedProcess({command, args, stdout, stderr, exit})
 
+
   runSketch: ->
     @saveSketch()
     @buildSketch()
 
   display: (line) ->
     @view.log(line)
+
+  closeSketch: ->
+    if @view
+      @view.clear()
+    if @process
+      psTree @process.process.pid, (err, children) =>
+        for child in children
+          process.kill(child.PID)
