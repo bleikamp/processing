@@ -9,4 +9,6 @@
 # https://atom.io/docs/latest/advanced/keymaps
 'atom-text-editor':
   'ctrl-alt-b': 'processing:run'
+  'cmd-alt-b': 'processing:run'
   'ctrl-alt-c': 'processing:close'
+  'cmd-alt-c': 'processing:close'
