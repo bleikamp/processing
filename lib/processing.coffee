@@ -49,6 +49,8 @@ module.exports = Processing =
       if !@view
         @view = new ProcessingView
         atom.workspace.addBottomPanel(item: @view)
+      else
+        atom.workspace.panelForItem(@view).show()
       if @process
         psTree @process.process.pid, (err, children) =>
           for child in children
@@ -57,7 +59,7 @@ module.exports = Processing =
       @process = new BufferedProcess({command, args, stdout, stderr, exit})
     else
       if @view
-        atom.workspace.panelForItem(@view).destroy()
+        atom.workspace.panelForItem(@view).hide()
 
 
   runSketch: ->
