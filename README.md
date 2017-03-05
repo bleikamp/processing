@@ -1,3 +1,7 @@
+___This package is unmaintained___
+
+I recommend using the [Script](https://atom.io/packages/script) package for Atom to run Processing sketches (`.pde` files) from Atom.
+
 # Processing in Atom
 
 Run Processing sketches from Atom by pressing `ctrl+alt+b`
