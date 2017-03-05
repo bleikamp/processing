@@ -33,25 +33,33 @@ module.exports = Processing =
     console.log("build and run time")
     editor  = atom.workspace.getActivePaneItem()
     file    = editor?.buffer.file
-    folder  = file.getParent().getPath()
-    build_dir = path.join(folder, "build")
-    command = path.normalize(atom.config.get("processing.processing-executable"))
-    args = ["--force", "--sketch=#{folder}", "--output=#{build_dir}", "--run"]
-    options = {}
-    console.log("Running command #{command} #{args.join(" ")}")
-    stdout = (output) => @display output
-    stderr = (output) => @display output
-    exit = (code) ->
-      console.log("Error code: #{code}")
-    if !@view
-      @view = new ProcessingView
-      atom.workspace.addBottomPanel(item: @view)
-    if @process
-      psTree @process.process.pid, (err, children) =>
-        for child in children
-          process.kill(child.PID)
-      @view.clear()
-    @process = new BufferedProcess({command, args, stdout, stderr, exit})
+    name    = file?.getBaseName()
+
+    if name.includes('.pde')
+      folder  = file.getParent().getPath()
+      build_dir = path.join(folder, "build-tmp")
+      command = path.normalize(atom.config.get("processing.processing-executable"))
+      args = ["--force", "--sketch=#{folder}", "--output=#{build_dir}", "--run"]
+      options = {}
+      console.log("Running command #{command} #{args.join(" ")}")
+      stdout = (output) => @display output
+      stderr = (output) => @display output
+      exit = (code) ->
+        console.log("Error code: #{code}")
+      if !@view
+        @view = new ProcessingView
+        atom.workspace.addBottomPanel(item: @view)
+      else
+        atom.workspace.panelForItem(@view).show()
+      if @process
+        psTree @process.process.pid, (err, children) =>
+          for child in children
+            process.kill(child.PID)
+        @view.clear()
+      @process = new BufferedProcess({command, args, stdout, stderr, exit})
+    else
+      if @view
+        atom.workspace.panelForItem(@view).hide()
 
 
   runSketch: ->
